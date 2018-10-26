@@ -1,5 +1,7 @@
+# Import Graphics, Time, and Random
 import turtle, time, random
 
+# FIRST LIST (List of colors the class 'Choose' can choose from)
 colors = ['snow', 'ghost white', 'white smoke', 'gainsboro', 'floral white', 'old lace',
     'linen', 'antique white', 'papaya whip', 'blanched almond', 'bisque', 'peach puff',
     'navajo white', 'lemon chiffon', 'mint cream', 'azure', 'alice blue', 'lavender',
@@ -68,267 +70,265 @@ colors = ['snow', 'ghost white', 'white smoke', 'gainsboro', 'floral white', 'ol
 
 # Set up the screen
 screen = turtle.Screen()
-screen.title("Atari Snake Game - Ahmad Sayad")
-screen.bgcolor("black")
-screen.setup(590, 625)
+screen.title("Atari Snake Game - Ahmad Sayad")  # Window Title
+screen.bgcolor("black") 
+screen.setup(590, 625)  # Set width and height of the screen 
 screen.tracer(0) # Turns off the screen updates
 
+# Animate the GUI in the start
+def animateGUI(type):
+    # FIRST LOOP (To update position four times)
+    for i in range(0,4,1):
+        time.sleep(1)     
+        type.clear()
+        type.goto(0, 100-50)
+        type.write("S N A K E", align="center", font=("DS-Terminal", 80, "normal"))
+        time.sleep(1)
+        type.clear()
+        type.goto(0, 100)
+        type.write("S N A K E", align="center", font=("DS-Terminal", 80, "normal"))
+
+# Clear and write a text. Requires info of text and object
+def clearAndWrite(object, string, align, font, fontSize, type):
+    object.clear()
+    object.write(string, align = align, font = (font, fontSize, type))
+
+ # Reset the screen
+def resetScreen():
+    screen.clear()
+    screen.bgcolor("black")
+    screen.tracer(0) # Turns off the screen updates
+   
+# Setup the GUI 
+def GUISetup(GUIName):
+    GUIName.penup() # Make sure GUI doesn't draw
+    GUIName.hideturtle()    # Hide the default turtle
+
+# Aanimate Special GUI 
+def specialAnimation():
+    specialGUI = turtle.Turtle()
+    # SECOND LOOP (Animate the special GUI) 
+    for i in range(0, 8, 1):
+        specialGUI.color("white")
+        specialGUI.penup()
+        specialGUI.hideturtle()
+        specialGUI.goto(0, 0)
+        specialGUI.write("GET READY TO RUMBLE", align="center", font=("DS-Terminal", 43, "normal"))
+        time.sleep(.2)
+        specialGUI.clear()
+        specialGUI.color("red")
+        specialGUI.write("GET READY TO RUMBLE", align="center", font=("DS-Terminal", 43, "normal"))
+        time.sleep(.2)
+    specialGUI.clear()
+
+# Main Menu Function, this code is loaded in first 
 def mainMenu():
-    print("We are in the main menu!")
-    sideMenuGUI = turtle.Turtle()
-    sideMenuGUI.color("white")
-    sideMenuGUI.penup()
-    sideMenuGUI.hideturtle()
+       
+    # Create the mini GUI 
+    sideMenuGUI = turtle.Turtle()   
+    sideMenuGUI.color("white") 
+    GUISetup(sideMenuGUI)
     sideMenuGUI.goto(125,-300)
     sideMenuGUI.write("c3d4 @2018 Comp Sci. ", align="center", font=("DS-Terminal", 25, "normal"))
 
-
+    # Create the header
     mainMenuGUI = turtle.Turtle()
     mainMenuGUI.color("white")
-    mainMenuGUI.penup()
-    mainMenuGUI.hideturtle()
+    GUISetup(mainMenuGUI)
     mainMenuGUI.goto(0,100)
     mainMenuGUI.write("S N A K E", align="center", font=("DS-Terminal", 80, "normal"))
     
     # Animate
-    for i in range(0,4,1):
-        time.sleep(1)
-        mainMenuGUI.clear()
-        mainMenuGUI.goto(0, 100-50)
-        mainMenuGUI.write("S N A K E", align="center", font=("DS-Terminal", 80, "normal"))
-        time.sleep(1)
-        mainMenuGUI.clear()
-        mainMenuGUI.goto(0, 100)
-        mainMenuGUI.write("S N A K E", align="center", font=("DS-Terminal", 80, "normal"))
+    animateGUI(mainMenuGUI)
 
-    # GUI 
+    # Press To Play GUI
     controlsGUI = turtle.Turtle()
     controlsGUI.color("white")
-    controlsGUI.penup()
-    controlsGUI.hideturtle()
+    GUISetup(controlsGUI)
     controlsGUI.goto(0,-20)
     controlsGUI.write("-Press 'E' To Play-", align="center", font=("DS-Terminal", 40, "normal"))
     
+    # Let the window listen for inputs
     screen.listen()
+    
+    # Check if Captial E was pressed, if so, go to the next function
     screen.onkeypress(Choose.chooseMenu, "E")
     
+    # Update the screen
     screen.mainloop()
 
+# Create a class, so to access it's variables globally and locally 
 class Choose():
+    # Bools used to to select modes, set to false by default 
     TRACE = False
     RANDOM = False 
+    
+    # Choose Menu Screen
     def chooseMenu():
-        print("We are in the options menu!")
    
         # Set up the screen
-        screen.clear()
-        screen.bgcolor("black")
-        screen.setup(590, 625)
-        screen.tracer(0) # Turns off the screen updates
+        resetScreen()
 
+        # Set up the header of the screen 
         chooseTitleGUI = turtle.Turtle()
         chooseTitleGUI.color("white")
-        chooseTitleGUI.penup()
-        chooseTitleGUI.hideturtle()
+        GUISetup(chooseTitleGUI)
         chooseTitleGUI.goto(0,230)
         chooseTitleGUI.write("Choose A Mode: ", align="center", font=("DS-Terminal", 40, "normal"))
 
+        # Create the Random Menu GUI
         randomGUI = turtle.Turtle()
         randomGUI.color("white")
-        randomGUI.penup()
-        randomGUI.hideturtle()
+        GUISetup(randomGUI)
         randomGUI.goto(0,50)
         randomGUI.write("Random [O/P]: {}".format(Choose.RANDOM), align="center", font=("DS-Terminal", 40, "normal"))
-
+        
+        # Create the Tracer Menu GUI
         tracerGUI = turtle.Turtle()
         tracerGUI.color("white")
-        tracerGUI.penup()
-        tracerGUI.hideturtle()
+        GUISetup(tracerGUI)
         tracerGUI.goto(0,-50)
         tracerGUI.write("Trace [T/F]: {}".format(Choose.TRACE), align="center", font=("DS-Terminal", 40, "normal"))
 
+        # Create the continue text 
         continueGUI = turtle.Turtle()
         continueGUI.color("white")
-        continueGUI.penup()
-        continueGUI.hideturtle()
+        GUISetup(continueGUI)
         continueGUI.goto(0,-250)
-        continueGUI.write("-Press 'e' To Continu-", align="center", font=("DS-Terminal", 40, "normal"))
+        continueGUI.write("-Press 'e' To Continue-", align="center", font=("DS-Terminal", 40, "normal"))
 
+        # Trace Mode Functions
         def trace():
-            Choose.TRACE = True
-            tracerGUI.clear()
-            tracerGUI.write("Trace [T/F]: True", align="center", font=("DS-Terminal", 40, "normal"))
-            print("Trace: " + str(Choose.TRACE))
-    
+            Choose.TRACE = True # Enables trace mode 
+            clearAndWrite(object=tracerGUI, string="Trace [T/F]: True", align="center", font="DS-Terminal", fontSize=40, type="normal")            
+                
         def noTrace():
-            Choose.TRACE = False
-            tracerGUI.clear()
-            tracerGUI.write("Trace [T/F]: False", align="center", font=("DS-Terminal", 40, "normal"))
-            print("Trace: " + str(Choose.TRACE))
+            Choose.TRACE = False    # Disables trace mode 
+            clearAndWrite(object=tracerGUI, string="Trace [T/F]: False", align="center", font="DS-Terminal", fontSize=40, type="normal")            
     
+        # Random Mode Functions
         def randomEvent():
-            Choose.RANDOM = True
-            randomGUI.clear()
-            randomGUI.write("Random [O/P]: True", align="center", font=("DS-Terminal", 40, "normal"))
-            print("Random: " + str(Choose.RANDOM))
+            Choose.RANDOM = True    # Enables random mode 
+            clearAndWrite(object=randomGUI, string="Random [T/F]: True", align="center", font="DS-Terminal", fontSize=40, type="normal")            
     
+        # Random Mode Functions
         def noRandom():
-            Choose.RANDOM = False
-            randomGUI.clear()
-            randomGUI.write("Random [O/P]: False", align="center", font=("DS-Terminal", 40, "normal"))
-            print("Random: " + str(Choose.RANDOM))
+            Choose.RANDOM = False   # Disable random mode 
+            clearAndWrite(object=randomGUI, string="Random [T/F]: False", align="center", font="DS-Terminal", fontSize=40, type="normal")            
     
+        # Let the window listen for inputs
         screen.listen()
+        
+        # Bind 'T' to turn trace on 
         screen.onkeypress(trace, "T")
+        
+        # Bind 'F' to turn trace off 
         screen.onkeypress(noTrace, "F")
+
+        # Bind 'O' to turn random on 
         screen.onkeypress(randomEvent, "O")
+        
+        # Bind 'P' to turn random off 
         screen.onkeypress(noRandom, "P")
+
+        # Bind 'e' to start the game with current settings
         screen.onkeypress(snakeGame, "e")
 
+        # Update the screen 
         screen.mainloop()
 
 def snakeGame():
-
-    print("You are playing snake!")
-    # Create Special UI
-    if Choose.RANDOM == True:
-        delay = 0.05
-    else:
-        delay = 0.1
     
-    print(Choose.TRACE)
     # Score
     score = 0
 
     # Set up the screen
-    screen.clear()
-    screen.bgcolor("black")
-    screen.setup(590, 625)
-    screen.tracer(0) # Turns off the screen updates
+    resetScreen()
 
+    # Special Animation for Random Mode, and difficulty gap 
     if Choose.RANDOM == True:
-        specialGUI = turtle.Turtle()
-        for i in range(0, 2, 1):
-            specialGUI.color("white")
-            specialGUI.penup()
-            specialGUI.hideturtle()
-            specialGUI.goto(0, 0)
-            specialGUI.write("ARE YOU READY TO RUMBLE", align="center", font=("DS-Terminal", 30, "normal"))
-            time.sleep(.2)
-            specialGUI.clear()
-            specialGUI.color("red")
-            specialGUI.write("ARE YOU READY TO RUMBLE", align="center", font=("DS-Terminal", 30, "normal"))
-            time.sleep(.2)
-            specialGUI.clear()
-            specialGUI.color("white")
-            specialGUI.write("ARE YOU READY TO RUMBLE", align="center", font=("DS-Terminal", 30, "normal"))
-            time.sleep(.2)
-            specialGUI.clear()
-            specialGUI.color("red")
-            specialGUI.write("ARE YOU READY TO RUMBLE", align="center", font=("DS-Terminal", 30, "normal"))
-            time.sleep(.2)
-            specialGUI.clear()
-            specialGUI.color("white")
-            specialGUI.write("ARE YOU READY TO RUMBLE", align="center", font=("DS-Terminal", 30, "normal"))
-            time.sleep(.2)
-            specialGUI.clear()
-            specialGUI.color("red")
-            specialGUI.write("ARE YOU READY TO RUMBLE", align="center", font=("DS-Terminal", 30, "normal"))
-            time.sleep(.2)
-            specialGUI.clear()
-            specialGUI.color("white")
-            specialGUI.write("ARE YOU READY TO RUMBLE", align="center", font=("DS-Terminal", 30, "normal"))
-            time.sleep(.2)
-        specialGUI.clear()
+        delay = 0.05    #Set a fast delay
+        specialAnimation()
+    else:
+        delay = 0.1 # Set a slow delay 
 
+    # Game Over    
     def gameOver():
-        gameOverGUI.write("Game Over!", align="center", font=("DS-Terminal", 50, "normal"))
-        time.sleep(1)
+        # THIRD LOOP (Animate Game Over)
+        for i in range (0,2, 1):
+            gameOverGUI.clear()
+            gameOverGUI.color("red")
+            gameOverGUI.write("Game Over!", align="center", font=("DS-Terminal", 50, "normal"))
+            time.sleep(1)
+            gameOverGUI.clear()
+            gameOverGUI.color("white")
+            gameOverGUI.write("Game Over!", align="center", font=("DS-Terminal", 50, "normal"))
+            time.sleep(1)
+        
         gameOverGUI.clear()
-        gameOverGUI.color("red")
-        gameOverGUI.write("Game Over!", align="center", font=("DS-Terminal", 50, "normal"))
-        time.sleep(1)
-        gameOverGUI.clear()
-        gameOverGUI.color("white")
-        gameOverGUI.write("Game Over!", align="center", font=("DS-Terminal", 50, "normal"))
-        time.sleep(1)
-        gameOverGUI.clear()
-        gameOverGUI.color("red")
-        gameOverGUI.write("Game Over!", align="center", font=("DS-Terminal", 50, "normal"))
-        time.sleep(1)
-        gameOverGUI.clear()
-        snakeHead.goto(0,0)
-        snakeHead.direction = "stop"
-        Choose.chooseMenu()
+        snakeHead.goto(0,0) # Go To Origin 
+        snakeHead.direction = "stop"    # Set direction to nothing, for input
+        
+        Choose.chooseMenu() # Go back to the previous screen 
 
-
-    def dirUp():
+    # Direction Rules: 
+    def dirUp():    # Y+
         if snakeHead.direction != "down":
             snakeHead.direction = "up"
 
-    def dirDown():
+    def dirDown():  # Y-
         if snakeHead.direction != "up":
             snakeHead.direction = "down"
 
-    def dirLeft():
+    def dirLeft():  # X- 
         if snakeHead.direction != "right":
             snakeHead.direction = "left"
 
-    def dirRight():
+    def dirRight(): # X+
         if snakeHead.direction != "left":
             snakeHead.direction = "right"
 
+    # Movement
     def move():
-        if snakeHead.direction == "up":
-            y = snakeHead.ycor()
-            snakeHead.sety(y + 20)
+        if snakeHead.direction == "up":            
+            snakeHead.sety(snakeHead.ycor() + 20)
 
-        if snakeHead.direction == "down":
-            y = snakeHead.ycor()
-            snakeHead.sety(y - 20)
+        if snakeHead.direction == "down": 
+            snakeHead.sety(snakeHead.ycor() - 20)
 
         if snakeHead.direction == "left":
-            x = snakeHead.xcor()
-            snakeHead.setx(x - 20)
+            snakeHead.setx(snakeHead.xcor() - 20)
 
         if snakeHead.direction == "right":
-            x = snakeHead.xcor()
-            snakeHead.setx(x + 20)
+            snakeHead.setx(snakeHead.xcor() + 20)
 
     # Create play area
     playArea = turtle.Turtle()
-    playArea.penup()
+    GUISetup(playArea)  # I know this function is meant for the GUI, however it works with the play area in this case
     playArea.goto(-280, 270)
     playArea.color("white")
-    playArea.hideturtle()
     playArea.pendown()
 
-    playArea.forward(555)
-    playArea.right(90)
-    playArea.forward(555)
-    playArea.right(90)
-    playArea.forward(555)
-    playArea.right(90)
-    playArea.forward(555)
-
-    screen.listen()
-    screen.onkeypress(dirUp, "Up")
-
-
+    # Create square
+    for i in range(0, 4, 1):
+        playArea.forward(555)   # Draw
+        playArea.right(90)
+    
     # Snake head
     snakeHead = turtle.Turtle()
     snakeHead.penup()
-    snakeHead.speed(0)
+    snakeHead.speed(0)  
     snakeHead.shape("square")
     snakeHead.color("white")
     snakeHead.goto(0,0)
-    snakeHead.direction = "stop"
+    snakeHead.direction = "stop"    # Set direction to none, to reset movement
+    
+    # Enable the trace mode perk 
     if Choose.TRACE == True:
         snakeHead.pendown()
     else:
         snakeHead.penup()
     
-
     # Snake Pick Up
     pickUp = turtle.Turtle()
     pickUp.speed(0)
@@ -337,54 +337,37 @@ def snakeGame():
     pickUp.penup()
     pickUp.goto(0,100)
 
-
+    # SECOND LIST (List of segments of the snake's body)
     segments = []
 
     # GUI
     GUI = turtle.Turtle()
     GUI.color("white")
-    GUI.penup()
-    GUI.hideturtle()
+    GUISetup(GUI)
     GUI.goto(-190, 270)
     GUI.write("Score: 0", align="center", font=("DS-Terminal", 35, "normal"))
-    # Functions
+
+    # Create the gameover GUI
     gameOverGUI = turtle.Turtle()
     gameOverGUI.color("white")
-    gameOverGUI.penup()
-    gameOverGUI.hideturtle()
+    GUISetup(gameOverGUI)
     gameOverGUI.goto(0,0)
 
     # Keyboard bindings
-    screen.listen()
-    screen.onkeypress(dirUp, "Up")
-    screen.onkeypress(dirDown, "Down")
-    screen.onkeypress(dirLeft, "Left")
-    screen.onkeypress(dirRight, "Right")
+    screen.listen() # Check for input
+    screen.onkeypress(dirUp, "Up")  # Move upwards
+    screen.onkeypress(dirDown, "Down")  # Move downwards
+    screen.onkeypress(dirLeft, "Left")  # Move sideways
+    screen.onkeypress(dirRight, "Right")    # Move sideways
 
-    # Main game loop
+    # FOURTH LOOP(Main game loop)
     while True:
+        # Update the window  
         screen.update()
 
-        # Game 
         # Check for a collision with the border
         if snakeHead.xcor()>260 or snakeHead.xcor()<-260 or snakeHead.ycor()>260 or snakeHead.ycor()<-260:
-            gameOver()
-            # Hide the segments
-            for segment in segments:
-                segment.goto(1000, 1000)
-        
-            # Clear the segments list
-            segments.clear()
-
-            # Reset the score
-            score = 0
-
-            # Reset the delay
-            delay = 0.1
-
-            GUI.clear()
-            GUI.write("Score: {}".format(score), align="center", font=("DS-Terminal", 35, "normal"))
-
+            gameOver()  # Game Over
 
         # Check for a collision with the pickUp
         if snakeHead.distance(pickUp) < 20:
@@ -394,8 +377,10 @@ def snakeGame():
             nSegment.speed(0)
             nSegment.shape("square")
             nSegment.color("white")
+            # Add the new segment to the list of segments
             segments.append(nSegment)
 
+            # Toggle Random Mode Perk 
             if (Choose.RANDOM == True):
                 snakeHead.color(random.choice(colors))
                 pickUp.color(random.choice(colors))
@@ -416,42 +401,22 @@ def snakeGame():
             GUI.clear()
             GUI.write("Score: {}".format(score), align="center", font=("DS-Terminal", 35, "normal"))
 
-        # Move the end segments first in reverse order
+        # FIFTH LOOP (Move the end segments first in reverse order)
         for index in range(len(segments)-1, 0, -1):
-            x = segments[index-1].xcor()
-            y = segments[index-1].ycor()
-            segments[index].goto(x, y)
+            segments[index].goto(segments[index-1].xcor(), segments[index-1].ycor())    # Move in reversed order
 
-        # Move segment 0 to where the head is
+        # Move the first segment to where the head is
         if len(segments) > 0:
-            x = snakeHead.xcor()
-            y = snakeHead.ycor()
-            segments[0].goto(x,y)
-
+            segments[0].goto(snakeHead.xcor(),snakeHead.ycor())
+        
         move()    
 
         # Check for head collision with the body segments
         for segment in segments:
             if segment.distance(snakeHead) < 20:
                 gameOver()
-        
-                # Hide the segments
-                for segment in segments:
-                    segment.goto(1000, 1000)
-        
-                # Clear the segments list
-                segments.clear()
 
-                # Reset the score
-                score = 0
-
-                # Reset the delay
-                delay = 0.1
-        
-                # Update the score display
-                GUI.clear()
-                GUI.write("Score: {}".format(score), align="center", font=("DS-Terminal", 35, "normal"))
-
+# Update and loop 
         time.sleep(delay)
     screen.mainloop()
 
